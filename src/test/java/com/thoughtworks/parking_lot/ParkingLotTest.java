@@ -95,7 +95,26 @@ public class ParkingLotTest {
         Assertions.assertEquals("parkinglot1",jsonArray.getJSONObject(0).getString("name"));
         Assertions.assertEquals("parkinglot2",jsonArray.getJSONObject(1).getString("name"));
 
-
     }
 
+    @Test
+    public void should_return_parkinglot_when_search_parking_lot_by_id() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setCapicity(16);
+        parkingLot.setName("parkinglot1");
+        parkingLot.setPosition("address1");
+        ParkingLot parkingLot1=parkingLotResposity.save(parkingLot);
+        //when
+
+        String result=this.mockMvc.perform(get("/parkinglots/"+parkingLot1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        //then
+        JSONObject jsonObject=new JSONObject(result);
+
+        Assertions.assertEquals("parkinglot1",jsonObject.getString("name"));
+
+    }
 }

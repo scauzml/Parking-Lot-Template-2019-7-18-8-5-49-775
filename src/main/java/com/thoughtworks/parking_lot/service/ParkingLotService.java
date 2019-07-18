@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class ParkingLotService {
 
     public void deleteById(String id) {
         parkingLotResposity.deleteById(id);
+
+    }
+
+    public ParkingLot findParkingLotByID(String id) {
+       return parkingLotResposity.findById(id).get();
 
     }
 }

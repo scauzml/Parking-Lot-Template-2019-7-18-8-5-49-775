@@ -33,5 +33,11 @@ public class ParkingLotController {
         List<ParkingLot> parkingLots=parkingLotService.getParkingLotByPage(page,pageSize);
         return ResponseEntity.ok().body(parkingLots);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getParkingLotByID(@PathVariable("id") String id) {
+        ParkingLot parkingLot=parkingLotService.findParkingLotByID(id);
+        return ResponseEntity.ok().body(parkingLot);
+    }
 }
 
