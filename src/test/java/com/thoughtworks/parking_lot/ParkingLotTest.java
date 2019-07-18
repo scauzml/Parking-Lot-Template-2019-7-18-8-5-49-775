@@ -113,8 +113,29 @@ public class ParkingLotTest {
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         //then
         JSONObject jsonObject=new JSONObject(result);
-
         Assertions.assertEquals("parkinglot1",jsonObject.getString("name"));
+
+    }
+
+    @Test
+    public void should_return_parkinglot_when_put_parkinglot() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setCapicity(16);
+        parkingLot.setName("parkinglot1");
+        parkingLot.setPosition("address1");
+        ParkingLot parkingLot1=parkingLotResposity.save(parkingLot);
+        //when
+        parkingLot.setName("pa1");
+        JSONObject jsonObject = new JSONObject(parkingLot);
+
+        String result=this.mockMvc.perform(put("/parkinglots").content(jsonObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        //then
+        JSONObject jsonObject1=new JSONObject(result);
+        Assertions.assertEquals("pa1",jsonObject.getString("name"));
 
     }
 }

@@ -37,4 +37,9 @@ public class ParkingLotService {
        return parkingLotResposity.findById(id).get();
 
     }
+
+    public ParkingLot changeParkingLot(ParkingLot parkingLot) {
+        ParkingLot parkingLot1 = parkingLotResposity.saveAndFlush(parkingLot);
+        return parkingLot1;
+    }
 }

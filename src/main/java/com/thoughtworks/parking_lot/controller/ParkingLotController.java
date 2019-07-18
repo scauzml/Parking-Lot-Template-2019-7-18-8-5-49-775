@@ -39,5 +39,11 @@ public class ParkingLotController {
         ParkingLot parkingLot=parkingLotService.findParkingLotByID(id);
         return ResponseEntity.ok().body(parkingLot);
     }
+
+    @PutMapping
+    public ResponseEntity changeParkingLot(@RequestBody ParkingLot parkingLot) {
+        ParkingLot parkingLot1=parkingLotService.changeParkingLot(parkingLot);
+        return ResponseEntity.ok().body(parkingLot1);
+    }
 }
 
