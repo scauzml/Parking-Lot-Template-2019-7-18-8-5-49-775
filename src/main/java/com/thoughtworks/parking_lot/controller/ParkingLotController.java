@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/parkinglots")
 public class ParkingLotController {
@@ -26,5 +28,10 @@ public class ParkingLotController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(params = {"page","pageSize"})
+    public ResponseEntity getParkingLotByPage(@RequestParam("page")String page,@RequestParam("pageSize")String pageSize) {
+        List<ParkingLot> parkingLots=parkingLotService.getParkingLotByPage(page,pageSize);
+        return ResponseEntity.ok().body(parkingLots);
+    }
 }
 
