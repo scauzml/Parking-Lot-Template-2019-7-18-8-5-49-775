@@ -1,5 +1,6 @@
 package com.thoughtworks.parking_lot;
 
+import com.thoughtworks.parking_lot.dao.ParkingLotResposity;
 import com.thoughtworks.parking_lot.entity.ParkingLot;
 import com.thoughtworks.parking_lot.service.ParkingLotService;
 import org.json.JSONObject;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,6 +29,8 @@ public class ParkingLotTest {
 
     @Autowired
     ParkingLotService parkingLotService;
+    @Autowired
+    ParkingLotResposity parkingLotResposity;
 
     @Autowired
     MockMvc mockMvc;
@@ -45,6 +49,24 @@ public class ParkingLotTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
 
+    }
+
+    @Test
+    public void should_return_is_ok_when_delete_parking_lot_by_id() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setCapicity(16);
+        parkingLot.setName("parkinglot1");
+        parkingLot.setPosition("address1");
+        JSONObject jsonObject = new JSONObject(parkingLot);
+      ParkingLot parkingLot1=parkingLotResposity.save(parkingLot);
+        //when
+        //then
+        this.mockMvc.perform(delete("/parkinglots/"+parkingLot1.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
     }
+
 }

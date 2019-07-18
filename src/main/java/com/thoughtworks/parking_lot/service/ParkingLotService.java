@@ -15,4 +15,9 @@ public class ParkingLotService {
         ParkingLot parkingLot1=parkingLotResposity.save(parkingLot);
         return parkingLot1.getId()!=null?true:false;
     }
+
+    public void deleteById(String id) {
+        parkingLotResposity.deleteById(id);
+
+    }
 }
