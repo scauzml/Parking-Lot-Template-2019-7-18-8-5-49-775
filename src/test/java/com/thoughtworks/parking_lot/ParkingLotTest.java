@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -29,9 +30,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ParkingLotTest {
 
     @Autowired
-    ParkingLotService parkingLotService;
-    @Autowired
     ParkingLotResposity parkingLotResposity;
+
+    @BeforeEach
+    public void beforeEach() {
+        parkingLotResposity.deleteAll();
+    }
 
     @Autowired
     MockMvc mockMvc;

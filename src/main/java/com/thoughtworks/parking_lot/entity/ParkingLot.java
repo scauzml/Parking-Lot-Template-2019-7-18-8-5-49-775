@@ -14,6 +14,7 @@ public class ParkingLot {
     private String id;
     @Column(unique = true)
     private String name;
+
     private int capicity;
     private String position;
 
