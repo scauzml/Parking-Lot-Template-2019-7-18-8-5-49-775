@@ -1,8 +1,8 @@
 package com.thoughtworks.parking_lot;
 
 import com.thoughtworks.parking_lot.dao.ParkingLotResposity;
+import com.thoughtworks.parking_lot.entity.ParkingBill;
 import com.thoughtworks.parking_lot.entity.ParkingLot;
-import com.thoughtworks.parking_lot.service.ParkingLotService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -142,4 +140,5 @@ public class ParkingLotTest {
         Assertions.assertEquals("pa1",jsonObject.getString("name"));
 
     }
+
 }

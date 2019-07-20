@@ -17,7 +17,8 @@ public class ParkingLotService {
     private ParkingLotResposity parkingLotResposity;
 
     public List<ParkingLot> getParkingLotByPage(String page, String pageSize) {
-        Page<ParkingLot> parkingLots=parkingLotResposity.findAll(PageRequest.of(Integer.valueOf(page)-1,Integer.valueOf(pageSize)));
+        Page<ParkingLot> parkingLots=parkingLotResposity.findAll
+                (PageRequest.of(Integer.valueOf(page)-1,Integer.valueOf(pageSize)));
         return parkingLots.getContent();
 
     }
