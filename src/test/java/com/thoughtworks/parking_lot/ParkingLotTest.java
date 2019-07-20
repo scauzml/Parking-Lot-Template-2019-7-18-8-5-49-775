@@ -131,7 +131,7 @@ public class ParkingLotTest {
         parkingLot.setName("pa1");
         JSONObject jsonObject = new JSONObject(parkingLot);
 
-        String result=this.mockMvc.perform(put("/parkinglots").content(jsonObject.toString())
+        String result=this.mockMvc.perform(put("/parkinglots/"+parkingLot1.getId()).content(jsonObject.toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();

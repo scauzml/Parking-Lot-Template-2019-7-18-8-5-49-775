@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,14 +45,9 @@ public class ParkingBillTest {
         parkingBill.setCarNumber("1234");
         LocalDateTime startTime = LocateDateUtil.getLocalDateTime(new Date());
         parkingBill.setStartTime(startTime);
-//        LocalDateTime endTime = LocateDateUtil.getLocalDateTime(new Date());
-//        endTime.plusHours(2);
-//        parkingBill.setEndTime(endTime);
         parkingBill.setStatus(1);
-
-        //when
         JSONObject jsonObject = new JSONObject(parkingBill);
-
+        //when
         String result=this.mockMvc.perform(post("/parkingbills").content(jsonObject.toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -59,6 +55,28 @@ public class ParkingBillTest {
         //then
         JSONObject jsonObject1=new JSONObject(result);
         Assertions.assertEquals("parkinglot1",jsonObject.getString("parkingLotName"));
+
+    }
+    @Test
+    public void should_return_bill_status_is_off_when_after_get_a_car_then_put_parkinglot_bill_to_change() throws Exception{
+        //given
+        ParkingBill parkingBill=new ParkingBill();
+        parkingBill.setParkingLotName("parkinglot1");
+        parkingBill.setCarNumber("1234");
+        LocalDateTime startTime = LocateDateUtil.getLocalDateTime(new Date());
+        parkingBill.setStartTime(startTime);
+        parkingBill.setStatus(1);
+        ParkingBill parkingBill1=parkingBillResposity.saveAndFlush(parkingBill);
+
+        //when
+        String result=this.mockMvc.perform(put("/parkingbills"+parkingBill1.getBillId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
+
+        //then
+        JSONObject jsonObject1=new JSONObject(result);
+        Assertions.assertEquals(0,jsonObject1.getString("status"));
 
     }
 }

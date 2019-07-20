@@ -1,6 +1,7 @@
 package com.thoughtworks.parking_lot.service;
 
 import com.thoughtworks.parking_lot.dao.ParkingLotResposity;
+import com.thoughtworks.parking_lot.entity.ParkingBill;
 import com.thoughtworks.parking_lot.entity.ParkingLot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParkingLotService {
@@ -39,8 +41,14 @@ public class ParkingLotService {
 
     }
 
-    public ParkingLot changeParkingLot(ParkingLot parkingLot) {
-        ParkingLot parkingLot1 = parkingLotResposity.saveAndFlush(parkingLot);
-        return parkingLot1;
+    public ParkingLot changeParkingLot(ParkingLot parkingLot,String id) {
+        ParkingLot parkingLot1=parkingLotResposity.findById(id).get();
+        Optional<ParkingLot> optionalParkingLot = Optional.of(parkingLot1);
+        if (optionalParkingLot.isPresent()) {
+          parkingLot1.setName(parkingLot.getPosition());
+          parkingLot1.setCapicity(parkingLot.getCapicity());
+          parkingLot1.setPosition(parkingLot.getPosition());
+        }
+        return   parkingLotResposity.saveAndFlush(parkingLot1);
     }
 }
