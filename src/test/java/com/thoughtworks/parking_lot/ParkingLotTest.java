@@ -138,7 +138,6 @@ public class ParkingLotTest {
         //then
         JSONObject jsonObject1=new JSONObject(result);
         Assertions.assertEquals("pa1",jsonObject.getString("name"));
-
     }
 
 }

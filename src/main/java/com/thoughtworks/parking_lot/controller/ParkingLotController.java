@@ -40,11 +40,10 @@ public class ParkingLotController {
         ParkingLot parkingLot=parkingLotService.findParkingLotByID(id);
         return ResponseEntity.ok().body(parkingLot);
     }
-//需要修改
+
     @PutMapping("/{id}")
     public ResponseEntity changeParkingLot(@RequestBody ParkingLot parkingLot,@PathVariable("id")String id) {
-        ParkingLot parkingLot1=parkingLotService.changeParkingLot(parkingLot,id);
-        return ResponseEntity.ok().body(parkingLot1);
+        return ResponseEntity.ok().body(parkingLotService.changeParkingLot(parkingLot,id));
     }
 }
 

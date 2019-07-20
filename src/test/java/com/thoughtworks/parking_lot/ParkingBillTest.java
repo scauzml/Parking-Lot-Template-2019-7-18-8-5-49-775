@@ -69,14 +69,12 @@ public class ParkingBillTest {
         ParkingBill parkingBill1=parkingBillResposity.saveAndFlush(parkingBill);
 
         //when
-        String result=this.mockMvc.perform(put("/parkingbills"+parkingBill1.getBillId())
+        String result=this.mockMvc.perform(put("/parkingbills/"+parkingBill1.getBillId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
-
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         //then
         JSONObject jsonObject1=new JSONObject(result);
-        Assertions.assertEquals(0,jsonObject1.getString("status"));
-
+        Assertions.assertEquals(0,jsonObject1.getInt("status"));
     }
 }

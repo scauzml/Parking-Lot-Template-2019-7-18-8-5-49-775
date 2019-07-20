@@ -6,10 +6,7 @@ import com.thoughtworks.parking_lot.service.ParkingBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("parkingbills")
@@ -23,5 +20,10 @@ public class ParkingBillController {
         return parkingBill!=null? ResponseEntity.status(HttpStatus.CREATED).body(parkingBill):ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity changeParkingLot(@PathVariable("id")String id) {
+        ParkingBill parkingBill=parkingBillService.changeParkingLot(id);
+        return ResponseEntity.ok().body(parkingBill);
+    }
 
 }
