@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -54,10 +55,10 @@ public class ParkingBillTest {
         String result=this.mockMvc.perform(post("/parkingbills").content(jsonObject.toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+                .andExpect(status().isCreated()).andReturn().getResponse().getContentAsString();
         //then
         JSONObject jsonObject1=new JSONObject(result);
-        Assertions.assertEquals("pa1",jsonObject.getString("name"));
+        Assertions.assertEquals("parkinglot1",jsonObject.getString("parkingLotName"));
 
     }
 }

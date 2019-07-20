@@ -19,8 +19,8 @@ public class ParkingBillController {
     ParkingBillService parkingBillService;
     @PostMapping
     public ResponseEntity addParkingBill(@RequestBody ParkingBill parkingBill) {
-        boolean isSaveSucess=parkingBillService.save(parkingBill);
-        return isSaveSucess? ResponseEntity.status(HttpStatus.CREATED).build():ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        ParkingBill parkingBill1=parkingBillService.save(parkingBill);
+        return parkingBill!=null? ResponseEntity.status(HttpStatus.CREATED).body(parkingBill):ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 

@@ -11,8 +11,8 @@ public class ParkingBillService {
 
     @Autowired
     ParkingBillResposity parkingBillResposity;
-    public boolean save(ParkingBill parkingBill) {
+    public ParkingBill save(ParkingBill parkingBill) {
         ParkingBill parkingBill1=parkingBillResposity.save(parkingBill);
-        return parkingBill1.getBillId()!=null?true:false;
+        return parkingBill;
     }
 }
