@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ParkingLotResposity extends JpaRepository<ParkingLot,String> {
 
+    ParkingLot findParkingLotByName(String parkingLotName);
 }

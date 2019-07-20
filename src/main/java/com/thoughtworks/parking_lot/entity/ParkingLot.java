@@ -17,6 +17,7 @@ public class ParkingLot {
 
     private int capicity;
     private String position;
+    private int isNotCapicity;
 
     public ParkingLot(String name, int capicity, String position) {
         this.name = name;
@@ -25,6 +26,14 @@ public class ParkingLot {
     }
 
     public ParkingLot() {
+    }
+
+    public int getIsNotCapicity() {
+        return isNotCapicity;
+    }
+
+    public void setIsNotCapicity(int isNotCapicity) {
+        this.isNotCapicity = isNotCapicity;
     }
 
     public String getId() {

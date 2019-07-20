@@ -3,6 +3,7 @@ package com.thoughtworks.parking_lot;
 import com.thoughtworks.parking_lot.dao.ParkingBillResposity;
 import com.thoughtworks.parking_lot.dao.ParkingLotResposity;
 import com.thoughtworks.parking_lot.entity.ParkingBill;
+import com.thoughtworks.parking_lot.entity.ParkingLot;
 import com.thoughtworks.parking_lot.util.LocateDateUtil;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -30,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ParkingBillTest {
     @Autowired
     ParkingBillResposity parkingBillResposity;
+    @Autowired
+    ParkingLotResposity parkingLotResposity;
     @Autowired
     MockMvc mockMvc;
     @BeforeEach
@@ -76,5 +79,32 @@ public class ParkingBillTest {
         //then
         JSONObject jsonObject1=new JSONObject(result);
         Assertions.assertEquals(0,jsonObject1.getInt("status"));
+    }
+
+    @Test
+    public void should_return_exptionMessage_created_when_post_parkinglot_bill_to_save() throws Exception{
+        //given
+        ParkingLot parkingLot=new ParkingLot();
+        parkingLot.setCapicity(16);
+        parkingLot.setName("parkinglot1");
+        parkingLot.setPosition("address1");
+        parkingLot.setIsNotCapicity(1);
+        ParkingLot parkingLot1=parkingLotResposity.save(parkingLot);
+        ParkingBill parkingBill=new ParkingBill();
+        parkingBill.setParkingLotName("parkinglot1");
+        parkingBill.setCarNumber("1234");
+        LocalDateTime startTime = LocateDateUtil.getLocalDateTime(new Date());
+        parkingBill.setStartTime(startTime);
+        parkingBill.setStatus(0);
+        JSONObject jsonObject = new JSONObject(parkingBill);
+        //when
+        String result=this.mockMvc.perform(post("/parkingbills").content(jsonObject.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+        //then
+
+       Assertions.assertEquals("停车场已经满",result);
+
     }
 }
